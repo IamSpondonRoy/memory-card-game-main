@@ -49,8 +49,10 @@ p {
 }
 
 .front-image {
-  width: 60px;
-  height: 60px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  border-radius: 10px; 
 }
 
 .card.flipped {
@@ -68,9 +70,8 @@ p {
 }
 
 .card .front {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  transform: rotateY(180deg);
+  overflow: hidden; 
 }
 
 .card .back {
