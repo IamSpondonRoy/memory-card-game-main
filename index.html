@@ -19,18 +19,25 @@
     <div id="win-popup" class="popup-overlay" style="display: none;">
       <div class="popup-content">
         <h2>🎉 You Win! 🎉</h2>
-        <p>Great job completing Brain Match!</p>
+        <p id="final-score-msg">Great job completing Brain Match!</p>
         <button id="play-again-btn">Play Again</button>
       </div>
     </div>
 
     <!-- Main Game Content -->
     <h1>Brain Match</h1>
+
+    <div class="stats">
+      <p>Moves: <span class="moves">0</span></p>
+      <p>Time: <span class="timer">0s</span></p>
+      <p>Score: <span class="score">0</span></p>
+      <p>Best: <span class="best">0</span></p>
+    </div>
+
     <div class="grid-container"></div>
     
-    <p>Score: <span class="score"></span></p>
     <div class="actions">
-        <button onclick="restart()">Restart</button>
+      <button onclick="restart()">Restart</button>
     </div>
 
     <script src="index.js"></script>
