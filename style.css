@@ -1,15 +1,26 @@
 body {
+  margin: 0;
   min-height: 100vh;
   min-width: 100vw;
-  background-color: #125c69a1;
-  color: rgb(0, 0, 0);
   font-family: Arial, sans-serif;
+}
+
+/* Canvas background */
+#sky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  display: block;
 }
 
 h1 {
   text-align: center;
   font-weight: 700;
   font-size: 40px;
+  color: white; /* make visible on dark backgrounds */
 }
 
 .stats {
@@ -19,6 +30,7 @@ h1 {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 15px;
+  color: white; /* make visible on dark backgrounds */
 }
 
 .actions {
