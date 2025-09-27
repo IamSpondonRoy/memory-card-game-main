@@ -30,7 +30,7 @@ h1 {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 15px;
-  color: white; /* make visible on dark backgrounds */
+  color: rgb(255, 255, 255); /* make visible on dark backgrounds */
 }
 
 .actions {
@@ -146,7 +146,8 @@ h1 {
 }
 
 #start-btn,
-#play-again-btn {
+#play-again-btn,
+#next-level-btn {
   padding: 10px 20px;
   font-size: 1.1rem;
   background: #27ae60;
@@ -158,7 +159,8 @@ h1 {
 }
 
 #start-btn:hover,
-#play-again-btn:hover {
+#play-again-btn:hover,
+#next-level-btn:hover {
   background: #1e874b;
 }
 

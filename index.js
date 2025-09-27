@@ -14,6 +14,17 @@ const timerEl = document.querySelector(".timer");
 const bestEl = document.querySelector(".best");
 const finalScoreMsg = document.getElementById("final-score-msg");
 
+// LEVELS
+const LEVELS = [
+  { pairs: 3, rows: 2 },
+  { pairs: 4, rows: 2 },
+  { pairs: 5, rows: 2 },
+  { pairs: 7, rows: 2 },
+  { pairs: 9, rows: 3 },
+];
+let currentLevel = 0;
+let rowsForLevel = 3;
+
 // ==========================
 // ===== POPUP HANDLING =====
 // ==========================
@@ -21,10 +32,11 @@ const popup = document.getElementById("welcome-popup");
 const startBtn = document.getElementById("start-btn");
 const winPopup = document.getElementById("win-popup");
 const playAgainBtn = document.getElementById("play-again-btn");
+const nextLevelBtn = document.getElementById("next-level-btn");
 
 startBtn.addEventListener("click", () => {
   popup.style.display = "none";
-  startGame();
+  startGame(currentLevel);
 });
 
 playAgainBtn.addEventListener("click", () => {
@@ -32,15 +44,30 @@ playAgainBtn.addEventListener("click", () => {
   restart();
 });
 
+window.addEventListener("resize", () => setGrid(cards.length, rowsForLevel));
+
+if (nextLevelBtn) {
+  nextLevelBtn.addEventListener("click", () => {
+    winPopup.style.display = "none";
+    currentLevel = (currentLevel + 1) % LEVELS.length;
+    startGame(currentLevel);
+  });
+}
+
 // ==========================
 // ===== GAME FUNCTIONS =====
 // ==========================
-function startGame() {
+function startGame(level = currentLevel) {
   fetch("./data/cards.json")
     .then((res) => res.json())
     .then((data) => {
-      cards = [...data, ...data]; // duplicate for pairs
+      const { pairs, rows } = LEVELS[level];
+      rowsForLevel = rows;
+      const pool = data.slice(0, Math.min(pairs, data.length));
+      cards = [...pool, ...pool];
       shuffleCards();
+      gridContainer.innerHTML = "";
+      setGrid(cards.length, rows);
       generateCards();
       resetStats();
       updateBest();
@@ -52,9 +79,16 @@ function shuffleCards() {
   cards.sort(() => 0.5 - Math.random());
 }
 
+// Set Grid
+function setGrid(n, rows = 3) {
+  const cols = Math.ceil(n / rows);
+  gridContainer.style.gridTemplateColumns = `repeat(${cols}, minmax(80px, 120px))`;
+}
+
 // Generate cards
 function generateCards() {
   gridContainer.innerHTML = "";
+  setGrid(cards.length, rowsForLevel);
   for (let card of cards) {
     const cardElement = document.createElement("div");
     cardElement.classList.add("card");
@@ -105,7 +139,7 @@ function disableCards() {
     stopTimer();
     let score = calculateScore();
     saveBest(score);
-    finalScoreMsg.textContent = `Your Score: ${score} | Best: ${localStorage.getItem("bestScore")}`;
+    finalScoreMsg.textContent = `Your Score: ${score} | Best Score: ${localStorage.getItem(bestKey())} | Best Time: ${formatTime(seconds)}`;
     setTimeout(() => {
       winPopup.style.display = "flex";
     }, 500);
@@ -126,6 +160,14 @@ function resetBoard() {
   [firstCard, secondCard, lockBoard] = [null, null, false];
 }
 
+function formatTime(totalSeconds) {
+  const m = Math.floor(totalSeconds / 60);
+  const s = totalSeconds % 60;
+  const mm = String(m).padStart(2, "0");
+  const ss = String(s).padStart(2, "0");
+  return `${mm}:${ss}`;
+}
+
 // ==========================
 // ===== STATS & SCORE ======
 // ==========================
@@ -135,7 +177,7 @@ function resetStats() {
   seconds = 0;
   movesEl.textContent = 0;
   scoreEl.textContent = 0;
-  timerEl.textContent = "0s";
+  timerEl.textContent = "00:00";
   clearInterval(timerInterval);
 }
 
@@ -152,7 +194,7 @@ function calculateScore() {
 function startTimer() {
   timerInterval = setInterval(() => {
     seconds++;
-    timerEl.textContent = `${seconds}s`;
+    timerEl.textContent = formatTime(seconds);
     updateScore();
   }, 1000);
 }
@@ -161,23 +203,26 @@ function stopTimer() {
   clearInterval(timerInterval);
 }
 
+function bestKey() {
+  return `bestScore-L${currentLevel}`;
+}
+
 // Best Score
 function saveBest(score) {
-  let best = localStorage.getItem("bestScore");
+  const key = bestKey();
+  const best = Number(localStorage.getItem(key));
   if (!best || score > best) {
-    localStorage.setItem("bestScore", score);
+    localStorage.setItem(key, score);
   }
   updateBest();
 }
 
 function updateBest() {
-  bestEl.textContent = localStorage.getItem("bestScore") || 0;
+  bestEl.textContent = localStorage.getItem(bestKey()) || 0;
 }
 
 // Restart
 function restart() {
   resetBoard();
-  shuffleCards();
-  generateCards();
-  resetStats();
+  startGame(currentLevel);
 }

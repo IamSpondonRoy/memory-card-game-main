@@ -28,7 +28,7 @@ for (let i = 0; i < 8; i++) {
 
 // fluffy cartoon clouds using circles
 function drawCloudShape(x, y, scale = 1, dark = false) {
-  ctx.fillStyle = dark ? "rgba(200,200,200,0.8)" : "rgba(255,255,255,0.9)";
+  ctx.fillStyle = dark ? "rgba(200,200,200,0.4)" : "rgba(255,255,255,0.5)";
   ctx.beginPath();
   ctx.arc(x, y, 30 * scale, 0, Math.PI * 2);
   ctx.arc(x + 40 * scale, y + 10 * scale, 35 * scale, 0, Math.PI * 2);
