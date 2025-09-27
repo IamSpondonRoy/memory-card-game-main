@@ -1,3 +1,5 @@
+import LEVELS from "./levels.js";
+
 const gridContainer = document.querySelector(".grid-container");
 let cards = [];
 let firstCard, secondCard;
@@ -13,15 +15,9 @@ const movesEl = document.querySelector(".moves");
 const timerEl = document.querySelector(".timer");
 const bestEl = document.querySelector(".best");
 const finalScoreMsg = document.getElementById("final-score-msg");
+const winTitle = document.getElementById("win-title");
+const levelEl = document.querySelector(".level");
 
-// LEVELS
-const LEVELS = [
-  { pairs: 3, rows: 2 },
-  { pairs: 4, rows: 2 },
-  { pairs: 5, rows: 2 },
-  { pairs: 7, rows: 2 },
-  { pairs: 9, rows: 3 },
-];
 let currentLevel = 0;
 let rowsForLevel = 3;
 
@@ -71,6 +67,9 @@ function startGame(level = currentLevel) {
       generateCards();
       resetStats();
       updateBest();
+
+      // update level display
+      levelEl.textContent = level + 1;
     });
 }
 
@@ -139,7 +138,11 @@ function disableCards() {
     stopTimer();
     let score = calculateScore();
     saveBest(score);
+
+    // update win popup with level info
+    winTitle.textContent = `🎉 You finished Level ${currentLevel + 1}! 🎉`;
     finalScoreMsg.textContent = `Your Score: ${score} | Best Score: ${localStorage.getItem(bestKey())} | Best Time: ${formatTime(seconds)}`;
+
     setTimeout(() => {
       winPopup.style.display = "flex";
     }, 500);
