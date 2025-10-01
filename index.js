@@ -1,4 +1,5 @@
 import LEVELS from "./levels.js";
+import { playSound, toggleSound } from "./audio.js";
 
 const gridContainer = document.querySelector(".grid-container");
 let cards = [];
@@ -29,26 +30,43 @@ const startBtn = document.getElementById("start-btn");
 const winPopup = document.getElementById("win-popup");
 const playAgainBtn = document.getElementById("play-again-btn");
 const nextLevelBtn = document.getElementById("next-level-btn");
+const restartBtn = document.getElementById("restart-btn");
+const toggleSoundBtn = document.getElementById("toggle-sound");
 
 startBtn.addEventListener("click", () => {
+  playSound("button");
   popup.style.display = "none";
   startGame(currentLevel);
 });
 
 playAgainBtn.addEventListener("click", () => {
+  playSound("button");
   winPopup.style.display = "none";
   restart();
 });
 
-window.addEventListener("resize", () => setGrid(cards.length, rowsForLevel));
-
 if (nextLevelBtn) {
   nextLevelBtn.addEventListener("click", () => {
+    playSound("button");
     winPopup.style.display = "none";
     currentLevel = (currentLevel + 1) % LEVELS.length;
     startGame(currentLevel);
   });
 }
+
+// Restart button
+restartBtn.addEventListener("click", () => {
+  playSound("button");
+  restart();
+});
+
+// Toggle sound button
+toggleSoundBtn.addEventListener("click", () => {
+  toggleSound();
+});
+
+// Resize event
+window.addEventListener("resize", () => setGrid(cards.length, rowsForLevel));
 
 // ==========================
 // ===== GAME FUNCTIONS =====
@@ -107,6 +125,7 @@ function flipCard() {
   if (lockBoard || this === firstCard) return;
 
   this.classList.add("flipped");
+  playSound("flip");
 
   if (!firstCard) {
     firstCard = this;
@@ -131,6 +150,8 @@ function disableCards() {
   matches++;
   updateScore();
 
+  playSound("match");
+
   firstCard.removeEventListener("click", flipCard);
   secondCard.removeEventListener("click", flipCard);
 
@@ -138,6 +159,8 @@ function disableCards() {
     stopTimer();
     let score = calculateScore();
     saveBest(score);
+
+    playSound("win");
 
     // update win popup with level info
     winTitle.textContent = `🎉 You finished Level ${currentLevel + 1}! 🎉`;
@@ -152,6 +175,7 @@ function disableCards() {
 }
 
 function unflipCards() {
+  playSound("wrong");
   setTimeout(() => {
     firstCard.classList.remove("flipped");
     secondCard.classList.remove("flipped");
