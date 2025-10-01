@@ -34,5 +34,33 @@
     {
         "image": "../assets/wombat.png",
         "name": "wombat"
+    },
+    {
+        "image": "../assets/echidnas2.png",
+        "name": "echidnas2"
+    },
+    {
+        "image": "../assets/kangeroo2.png",
+        "name": "kangeroo2"
+    },
+    {
+        "image": "../assets/koala2.png",
+        "name": "koala2"
+    },
+    {
+        "image": "../assets/kookaburra2.png",
+        "name": "kookaburra2"
+    },
+    {
+        "image": "../assets/tasdev.png",
+        "name": "tasdev"
+    },
+    {
+        "image": "../assets/tasdev2.png",
+        "name": "tasdev2"
+    },
+    {
+        "image": "../assets/turtle2.png",
+        "name": "turtle2"
     }
 ]
