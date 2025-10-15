@@ -65,13 +65,17 @@ h1 {
   margin: 0 auto;
 }
 
+.grid-container.is-shuffling {
+  pointer-events: none; /* lock input during reveal/shuffle */
+}
+
 .card {
   aspect-ratio: 3/4;
   border-radius: 10px;
   background-color: white;
   position: relative;
   transform-style: preserve-3d;
-  transition: all 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out; /* flip transition */
 }
 
 .front-image {
@@ -106,6 +110,12 @@ h1 {
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 10px;
+}
+
+/* === highlight the two cards being swapped === */
+.card.is-swapping {
+  outline: 3px solid rgba(255, 215, 0, 0.95);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
 }
 
 /* ============================= */
@@ -172,4 +182,34 @@ h1 {
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
+}
+
+/* ============================= */
+/* ===== Countdown Overlay ===== */
+/* ============================= */
+.countdown {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 998; /* below popups */
+  pointer-events: none;
+}
+
+.countdown.hidden { display: none; }
+
+.countdown #countdown-num {
+  font-size: clamp(48px, 12vw, 160px);
+  color: #ffffff;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  text-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  animation: pop 1s ease both;
+}
+
+@keyframes pop {
+  0%   { transform: scale(0.6); opacity: 0; }
+  30%  { opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
 }

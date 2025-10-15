@@ -1,5 +1,6 @@
 import LEVELS from "./levels.js";
 import { playSound, toggleSound } from "./audio.js";
+import { revealThenShuffle } from "./shuffle.js";
 
 const gridContainer = document.querySelector(".grid-container");
 let cards = [];
@@ -71,24 +72,36 @@ window.addEventListener("resize", () => setGrid(cards.length, rowsForLevel));
 // ==========================
 // ===== GAME FUNCTIONS =====
 // ==========================
-function startGame(level = currentLevel) {
-  fetch("./data/cards.json")
-    .then((res) => res.json())
-    .then((data) => {
-      const { pairs, rows } = LEVELS[level];
-      rowsForLevel = rows;
-      const pool = data.slice(0, Math.min(pairs, data.length));
-      cards = [...pool, ...pool];
-      shuffleCards();
-      gridContainer.innerHTML = "";
-      setGrid(cards.length, rows);
-      generateCards();
-      resetStats();
-      updateBest();
+async function startGame(level = currentLevel) {
+  const res = await fetch("./data/cards.json");
+  const data = await res.json();
 
-      // update level display
-      levelEl.textContent = level + 1;
-    });
+  const { pairs, rows } = LEVELS[level];
+  rowsForLevel = rows;
+  const pool = data.slice(0, Math.min(pairs, data.length));
+  cards = [...pool, ...pool];
+  shuffleCards();
+
+  gridContainer.innerHTML = "";
+  setGrid(cards.length, rows);
+  generateCards();
+  resetStats();
+  updateBest();
+  levelEl.textContent = level + 1;
+
+  // Reveal → 3-2-1 countdown → flip down → visible shuffle
+  lockBoard = true;
+  gridContainer.classList.add("is-shuffling");
+  await revealThenShuffle({
+    board: gridContainer,
+    countdownSecs: 3,
+    swaps: Math.min(1 + Math.floor(level / 2), 4),
+    swapMs: 700,
+    pauseBetween: 120,
+    highlight: true
+  });
+  gridContainer.classList.remove("is-shuffling");
+  lockBoard = false;
 }
 
 // Shuffle
@@ -142,7 +155,7 @@ function flipCard() {
 }
 
 function checkForMatch() {
-  let isMatch = firstCard.dataset.name === secondCard.dataset.name;
+  const isMatch = firstCard.dataset.name === secondCard.dataset.name;
   isMatch ? disableCards() : unflipCards();
 }
 
@@ -157,12 +170,11 @@ function disableCards() {
 
   if (matches === cards.length / 2) {
     stopTimer();
-    let score = calculateScore();
+    const score = calculateScore();
     saveBest(score);
 
     playSound("win");
 
-    // update win popup with level info
     winTitle.textContent = `🎉 You finished Level ${currentLevel + 1}! 🎉`;
     finalScoreMsg.textContent = `Your Score: ${score} | Best Score: ${localStorage.getItem(bestKey())} | Best Time: ${formatTime(seconds)}`;
 
@@ -209,7 +221,7 @@ function resetStats() {
 }
 
 function updateScore() {
-  let score = calculateScore();
+  const score = calculateScore();
   scoreEl.textContent = score;
 }
 
