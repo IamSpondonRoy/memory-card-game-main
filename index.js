@@ -96,8 +96,8 @@ async function startGame(level = currentLevel) {
     board: gridContainer,
     countdownSecs: 3,
     swaps: Math.min(1 + Math.floor(level / 2), 4),
-    swapMs: 700,
-    pauseBetween: 120,
+    swapMs: 1600,
+    pauseBetween: 200,
     highlight: true
   });
   gridContainer.classList.remove("is-shuffling");

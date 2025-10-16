@@ -31,7 +31,7 @@ export async function revealThenShuffle({
 
   // 3) Flip down (brief beat so players see the flip before motion)
   nodes.forEach(c => c.classList.remove("flipped"));
-  await wait(250);
+  await wait(600);
 
   // 4) Perform visible swaps using FLIP
   for (let i = 0; i < swaps; i++) {
