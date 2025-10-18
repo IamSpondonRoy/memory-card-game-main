@@ -73,6 +73,8 @@ window.addEventListener("resize", () => setGrid(cards.length, rowsForLevel));
 // ===== GAME FUNCTIONS =====
 // ==========================
 async function startGame(level = currentLevel) {
+  await ensureFunFactsLoaded();
+
   const res = await fetch("./data/cards.json");
   const data = await res.json();
 
@@ -159,11 +161,91 @@ function checkForMatch() {
   isMatch ? disableCards() : unflipCards();
 }
 
+// ===== Fun Facts popup =====
+let FUN_FACTS_POOL = null; // 會是一個 [{en: "..."}, ...] 的陣列
+
+async function ensureFunFactsLoaded() {
+  if (FUN_FACTS_POOL) return;              // 已載入就跳過
+  try {
+    const res = await fetch("./data/funfacts.json");
+    const raw = await res.json();
+    // 支援兩種格式：
+    // 1) 物件 { Koala:[{en},{en}], Wombat:[{en}] }
+    // 2) 陣列 [{en}, {en}]
+    if (Array.isArray(raw)) {
+      FUN_FACTS_POOL = raw.filter(x => x?.ff);
+    } else {
+      FUN_FACTS_POOL = Object.values(raw).flat().filter(x => x?.ff);
+    }
+  } catch (e) {
+    console.warn("Failed to load funfacts.json", e);
+    FUN_FACTS_POOL = [];
+  }
+}
+
+function pickRandomFactEN() {
+  if (!FUN_FACTS_POOL || FUN_FACTS_POOL.length === 0) return null;
+  const i = Math.floor(Math.random() * FUN_FACTS_POOL.length);
+  return FUN_FACTS_POOL[i].ff;
+}
+
+const funfactContainer = document.getElementById("funfact-container");
+let toastSideRight = false; // 左/右交錯
+
+function pushToast({ title = "Fun Fact", text = "", timeout = 3000 } = {}) {
+  if (!funfactContainer) return;
+  if (!text) return;
+
+  funfactContainer.style.display = "block"; // 有東西才顯示
+
+  if (funfactContainer.children.length >= 2) {
+    funfactContainer.firstElementChild?.remove();
+  }
+
+  toastSideRight = !toastSideRight;
+  const sideClass = toastSideRight ? "right" : "left";
+
+  const el = document.createElement("div");
+  el.className = `funfact-toast ${sideClass}`;
+  el.innerHTML = `
+    <h2>${title}</h2>
+    <button class="close-btn" aria-label="Close">×</button>
+    <p>${text}</p>
+  `;
+
+  // 關閉（手動/自動）
+  const close = () => {
+    if (!el.parentNode) return;
+    el.style.opacity = "0";
+    el.style.transform = "translateY(-6px)";
+    setTimeout(() => {
+      el.remove();
+      if (funfactContainer.children.length === 0) {
+        funfactContainer.style.display = "none";
+      }
+    }, 200);
+  };
+  el.querySelector(".close-btn").addEventListener("click", close);
+  setTimeout(close, timeout);
+
+  funfactContainer.appendChild(el);
+}
+
+// 從池子抽一句英文 → 丟一個 toast
+function showFunFact() {
+  const text = pickRandomFactEN();
+  if (!text) return false;
+  pushToast({ title: "Fun Fact", text, timeout: 2200 });
+  return true;
+}
+
 function disableCards() {
   matches++;
   updateScore();
 
   playSound("match");
+
+  showFunFact();
 
   firstCard.removeEventListener("click", flipCard);
   secondCard.removeEventListener("click", flipCard);
@@ -182,8 +264,7 @@ function disableCards() {
       winPopup.style.display = "flex";
     }, 500);
   }
-
-  resetBoard();
+    resetBoard();
 }
 
 function unflipCards() {

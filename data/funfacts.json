@@ -1,0 +1,77 @@
+{
+  "Crocodile": [
+    { "ff": "The saltwater crocodile is the biggest reptile in the world! Some can be over 5 meters long!"},
+    { "ff": "Even though it's called a “saltwater” crocodile, it can live in rivers and swamps too!"},
+    { "ff": "Crocodiles can stay very still in the water for a long time, waiting for food to come close."},
+    { "ff": "A crocodile's bite is very strong — stronger than a lion's!"},
+    { "ff": "Crocodiles have been on Earth for more than 200 million years!"},
+    { "ff": "In northern Australia, people don't swim in rivers because crocodiles might be there!"},
+    { "ff": "Australians call saltwater crocodiles “salties”!"}
+  ],
+  "Echidna": [
+    { "ff": "Echidnas are mammals that lay eggs — just like platypus!"},
+    { "ff": "Echidnas use a long, sticky tongue to catch ants and termites."},
+    { "ff": "Echidnas have sharp spines on their back to keep them safe."},
+    { "ff": "Echidnas can live almost anywhere in Australia — forests, deserts, even backyards!"},
+    { "ff": "A baby echidna is called a “puggle”."},
+    { "ff": "Echidnas are shy and move slowly. They roll up if they are scared."}
+  ],
+  "Platypus": [
+    { "ff": "Platypuses are mammals that lay eggs — just like echidnas!"},
+    { "ff": "Platypuses have a bill like a duck and webbed feet for swimming."},
+    { "ff": "You can only find platypuses in Australia!"},
+    { "ff": "Male platypuses have a sharp spur on their back leg that can give venom!"},
+    { "ff": "When swimming, platypuses close their eyes, ears, and nose. They use their bill to feel for food!"},
+    { "ff": "Baby platypuses drink milk from their mother's skin!"},
+    { "ff": "Platypuses store food in their cheeks while swimming!"}
+  ],
+  "Koala": [
+    { "ff": "Koalas are not bears. They are animals with a baby pouch!"},
+    { "ff": "Koalas eat only special tree leaves called eucalyptus, and they are very picky!"},
+    { "ff": "Koalas can sleep up to 20 hours a day!"},
+    { "ff": "A baby koala is called a “joey”."},
+    { "ff": "You can only find koalas in Australia."},
+    { "ff": "Koalas have two thumbs on each hand to help them climb trees!"}
+  ],
+  "Kangaroo": [
+    { "ff": "Kangaroos can't walk backward!"},
+    { "ff": "Mother kangaroos carry their babies, called joeys, in a pouch."},
+    { "ff": "Kangaroos can jump over 3 meters high and 9 meters long!"},
+    { "ff": "Kangaroos eat only plants and grass. We call these animals herbivores."},
+    { "ff": "Kangaroos live in groups called “mobs”."},
+    { "ff": "The kangaroo and the emu are both on Australia's coat of arms!"}
+  ],
+  "Emu": [
+    { "ff": "Emus are big birds, but they can't fly."},
+    { "ff": "Emus can run very fast — up to 50 kilometres per hour!"},
+    { "ff": "The father emu takes care of the eggs and babies!"},
+    { "ff": "Emus eat plants, seeds, and small insects."},
+    { "ff": "The emu and the kangaroo are both on Australia's coat of arms."},
+    { "ff": "Emus have soft feathers that feel like hair!"}
+  ],
+  "Kookaburra": [
+    { "ff": "Kookaburras make a sound that sounds like they are laughing!"},
+    { "ff": "Kookaburras live in trees, often in forests or parks."},
+    { "ff": "Kookaburras eat meat, like insects, small snakes, and frogs."},
+    { "ff": "Kookaburras live in families and help each other care for baby birds."},
+    { "ff": "The kookaburra is one of Australia's most famous birds."},
+    { "ff": "“Kookaburra” comes from an Aboriginal word that means “laughing sound.”"}
+  ],
+  "Sea Turtle": [
+    { "ff": "Sea turtles spend almost all their life in the ocean."},
+    { "ff": "Mother turtles come to the beach to lay their eggs in the sand."},
+    { "ff": "When baby turtles hatch, they run to the sea!"},
+    { "ff": "Sea turtles can stay underwater for many minutes without breathing."},
+    { "ff": "Sea turtles can find the same beach where they were born!"},
+    { "ff": "Some sea turtles can live for more than 80 years!"}
+  ],
+    "Wombat": [
+    { "ff": "Wombats dig big holes called burrows and live inside them."},
+    { "ff": "Wombats walk slowly, but they are very strong and can run fast if scared!"},
+    { "ff": "Wombats have a pouch for their baby just like koalas!"},
+    { "ff": "A wombat's pouch opens to the back, not the front!"},
+    { "ff": "Wombats make cube-shaped poop!"},
+    { "ff": "Wombats are nocturnal — they come out at night to eat grass."},
+    { "ff": "Wombats have very tough bottoms that help protect them from danger!"}
+  ]
+}
