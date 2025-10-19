@@ -173,9 +173,14 @@ async function ensureFunFactsLoaded() {
     // 1) 物件 { Koala:[{en},{en}], Wombat:[{en}] }
     // 2) 陣列 [{en}, {en}]
     if (Array.isArray(raw)) {
-      FUN_FACTS_POOL = raw.filter(x => x?.ff);
+      // If it's just a flat list, fallback to a global pool
+      FUN_FACTS_POOL = { _all: raw.filter(x => x?.ff) };
     } else {
-      FUN_FACTS_POOL = Object.values(raw).flat().filter(x => x?.ff);
+      // Keep it as a dictionary keyed by animal name
+      FUN_FACTS_POOL = {};
+      for (const [animal, arr] of Object.entries(raw)) {
+        FUN_FACTS_POOL[animal.toLowerCase()] = arr.filter(x => x?.ff);
+      }
     }
   } catch (e) {
     console.warn("Failed to load funfacts.json", e);
@@ -183,10 +188,20 @@ async function ensureFunFactsLoaded() {
   }
 }
 
-function pickRandomFactEN() {
-  if (!FUN_FACTS_POOL || FUN_FACTS_POOL.length === 0) return null;
-  const i = Math.floor(Math.random() * FUN_FACTS_POOL.length);
-  return FUN_FACTS_POOL[i].ff;
+function pickRandomFactEN(animal) {
+  if (!FUN_FACTS_POOL) return null;
+
+  const key = animal?.toLowerCase();
+  let pool = FUN_FACTS_POOL[key];
+
+  // fallback if missing
+  if (!pool || pool.length === 0) {
+    pool = FUN_FACTS_POOL._all || [];
+  }
+
+  if (pool.length === 0) return null;
+  const i = Math.floor(Math.random() * pool.length);
+  return pool[i].ff;
 }
 
 const funfactContainer = document.getElementById("funfact-container");
@@ -232,10 +247,10 @@ function pushToast({ title = "Fun Fact", text = "", timeout = 3000 } = {}) {
 }
 
 // 從池子抽一句英文 → 丟一個 toast
-function showFunFact() {
-  const text = pickRandomFactEN();
+function showFunFact(animal) {
+  const text = pickRandomFactEN(animal);
   if (!text) return false;
-  pushToast({ title: "Fun Fact", text, timeout: 2200 });
+  pushToast({ title: `Fun Fact about  ${animal}s`, text, timeout: 2500 });
   return true;
 }
 
@@ -245,7 +260,9 @@ function disableCards() {
 
   playSound("match");
 
-  showFunFact();
+  const animal = firstCard.dataset.name;
+  showFunFact(animal);
+
 
   firstCard.removeEventListener("click", flipCard);
   secondCard.removeEventListener("click", flipCard);
