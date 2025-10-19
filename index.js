@@ -162,16 +162,14 @@ function checkForMatch() {
 }
 
 // ===== Fun Facts popup =====
-let FUN_FACTS_POOL = null; // 會是一個 [{en: "..."}, ...] 的陣列
+let FUN_FACTS_POOL = null;
 
 async function ensureFunFactsLoaded() {
-  if (FUN_FACTS_POOL) return;              // 已載入就跳過
+  if (FUN_FACTS_POOL) return;
   try {
     const res = await fetch("./data/funfacts.json");
     const raw = await res.json();
-    // 支援兩種格式：
-    // 1) 物件 { Koala:[{en},{en}], Wombat:[{en}] }
-    // 2) 陣列 [{en}, {en}]
+
     if (Array.isArray(raw)) {
       // If it's just a flat list, fallback to a global pool
       FUN_FACTS_POOL = { _all: raw.filter(x => x?.ff) };
@@ -205,13 +203,13 @@ function pickRandomFactEN(animal) {
 }
 
 const funfactContainer = document.getElementById("funfact-container");
-let toastSideRight = false; // 左/右交錯
+let toastSideRight = false;
 
 function pushToast({ title = "Fun Fact", text = "", timeout = 3000 } = {}) {
   if (!funfactContainer) return;
   if (!text) return;
 
-  funfactContainer.style.display = "block"; // 有東西才顯示
+  funfactContainer.style.display = "block";
 
   if (funfactContainer.children.length >= 2) {
     funfactContainer.firstElementChild?.remove();
@@ -228,7 +226,6 @@ function pushToast({ title = "Fun Fact", text = "", timeout = 3000 } = {}) {
     <p>${text}</p>
   `;
 
-  // 關閉（手動/自動）
   const close = () => {
     if (!el.parentNode) return;
     el.style.opacity = "0";
@@ -246,7 +243,6 @@ function pushToast({ title = "Fun Fact", text = "", timeout = 3000 } = {}) {
   funfactContainer.appendChild(el);
 }
 
-// 從池子抽一句英文 → 丟一個 toast
 function showFunFact(animal) {
   const text = pickRandomFactEN(animal);
   if (!text) return false;
