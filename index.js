@@ -34,6 +34,12 @@ const nextLevelBtn = document.getElementById("next-level-btn");
 const restartBtn = document.getElementById("restart-btn");
 const toggleSoundBtn = document.getElementById("toggle-sound");
 
+// Level buttons
+const levelPickerPopup = document.getElementById("level-picker-popup");
+const levelButtonsContainer = document.getElementById("level-buttons");
+const levelSelectBtn = document.getElementById("level-select-btn");
+const closeLevelPicker = document.getElementById("close-level-picker");
+
 startBtn.addEventListener("click", () => {
   playSound("button");
   popup.style.display = "none";
@@ -358,4 +364,51 @@ function updateBest() {
 function restart() {
   resetBoard();
   startGame(currentLevel);
+}
+
+// Level buttons
+
+levelSelectBtn.addEventListener("click", () => {
+  playSound("button");
+  showLevelPicker();
+});
+
+closeLevelPicker.addEventListener("click", () => {
+  playSound("button");
+  levelPickerPopup.style.display = "none";
+  winPopup.style.display = "flex";
+});
+
+function showLevelPicker() {
+  levelButtonsContainer.innerHTML = "";
+  levelPickerPopup.style.display = "flex";
+
+  LEVELS.forEach((_, i) => {
+    const btn = document.createElement("button");
+    btn.textContent = i + 1;
+
+    // If player has completed the level, mark it
+    if (localStorage.getItem(`bestScore-L${i}`)) {
+      btn.classList.add("completed");
+    }
+
+    if (i > 0 && !localStorage.getItem(`levelCompleted-${i - 1}`)) {
+      btn.disabled = true;
+      btn.style.opacity = "0.5";
+      btn.style.cursor = "not-allowed";
+    }
+
+    btn.addEventListener("click", () => {
+      playSound("button");
+      levelPickerPopup.style.display = "none";
+      winPopup.style.display = "none";
+      popup.style.display = "none";
+      currentLevel = (currentLevel + i) % LEVELS.length;
+      restart();
+      startGame(currentLevel);
+      
+    });
+
+    levelButtonsContainer.appendChild(btn);
+  });
 }

@@ -157,6 +157,8 @@ h1 {
 
 #start-btn,
 #play-again-btn,
+#level-select-btn,
+#close-level-picker,
 #next-level-btn {
   padding: 10px 20px;
   font-size: 1.1rem;
@@ -170,6 +172,8 @@ h1 {
 
 #start-btn:hover,
 #play-again-btn:hover,
+#level-select-btn:hover,
+#close-level-picker:hover,
 #next-level-btn:hover {
   background: #1e874b;
 }
@@ -287,4 +291,24 @@ h1 {
   content: ""; 
   display: block; 
   clear: both; 
+}
+
+#level-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+#level-buttons button {
+  width: 60px;
+  height: 60px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  background: #27ae60;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }
