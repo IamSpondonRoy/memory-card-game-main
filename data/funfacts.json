@@ -57,7 +57,7 @@
     { "ff": "The kookaburra is one of Australia's most famous birds."},
     { "ff": "“Kookaburra” comes from an Aboriginal word that means “laughing sound.”"}
   ],
-  "Sea Turtle": [
+  "Turtle": [
     { "ff": "Sea turtles spend almost all their life in the ocean."},
     { "ff": "Mother turtles come to the beach to lay their eggs in the sand."},
     { "ff": "When baby turtles hatch, they run to the sea!"},
@@ -73,5 +73,14 @@
     { "ff": "Wombats make cube-shaped poop!"},
     { "ff": "Wombats are nocturnal — they come out at night to eat grass."},
     { "ff": "Wombats have very tough bottoms that help protect them from danger!"}
+  ],
+  "Tasmanian Devil": [
+    { "ff": "Tasmanian Devils are marsupials that carry babies in pouches." },
+    { "ff": "They have a strong bite and will eat almost anything!" },
+    { "ff": "Tasmanian Devils are nocturnal and active at night." },
+    { "ff": "They often make loud screeches to communicate." },
+    { "ff": "Tasmanian Devils can run up to 13 km/h." },
+    { "ff": "They are endangered due to a disease called DFTD." },
+    { "ff": "Devils are an important part of Tasmania's ecosystem." }
   ]
 }

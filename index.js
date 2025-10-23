@@ -192,7 +192,7 @@ async function ensureFunFactsLoaded() {
   }
 }
 
-function pickRandomFactEN(animal) {
+function pickFactEN(animal) {
   if (!FUN_FACTS_POOL) return null;
 
   const key = animal?.toLowerCase();
@@ -250,19 +250,26 @@ function pushToast({ title = "Fun Fact", text = "", timeout = 3000 } = {}) {
 }
 
 function showFunFact(animal) {
-  const text = pickRandomFactEN(animal);
+  const text = pickFactEN(animal);
   if (!text) return false;
   pushToast({ title: `Fun Fact about  ${animal}s`, text, timeout: 2500 });
   return true;
 }
 
+function renameAnimal(name) {
+  return name
+    .replace(/2$/, "")  
+    .replace(/s$/, "")    
+    .toLowerCase();       
+}
 function disableCards() {
   matches++;
   updateScore();
 
   playSound("match");
 
-  const animal = firstCard.dataset.name;
+  const animal = renameAnimal(firstCard.dataset.name);
+  
   showFunFact(animal);
 
 
@@ -273,7 +280,7 @@ function disableCards() {
     stopTimer();
     const score = calculateScore();
     saveBest(score);
-
+    localStorage.setItem(`levelCompleted-${currentLevel}`, true);
     playSound("win");
 
     winTitle.textContent = `🎉 You finished Level ${currentLevel + 1}! 🎉`;
@@ -376,7 +383,6 @@ levelSelectBtn.addEventListener("click", () => {
 closeLevelPicker.addEventListener("click", () => {
   playSound("button");
   levelPickerPopup.style.display = "none";
-  winPopup.style.display = "flex";
 });
 
 function showLevelPicker() {
@@ -388,25 +394,25 @@ function showLevelPicker() {
     btn.textContent = i + 1;
 
     // If player has completed the level, mark it
-    if (localStorage.getItem(`bestScore-L${i}`)) {
-      btn.classList.add("completed");
-    }
-
-    if (i > 0 && !localStorage.getItem(`levelCompleted-${i - 1}`)) {
+    const prevCompleted = i === 0 || localStorage.getItem(`levelCompleted-${i - 1}`);
+    if (!prevCompleted) {
       btn.disabled = true;
       btn.style.opacity = "0.5";
       btn.style.cursor = "not-allowed";
+    } else {
+      btn.disabled = false;
+      btn.style.opacity = "1";
+      btn.style.cursor = "pointer";
     }
 
     btn.addEventListener("click", () => {
       playSound("button");
       levelPickerPopup.style.display = "none";
       winPopup.style.display = "none";
-      popup.style.display = "none";
+      popup.style.display= "none";
       currentLevel = (currentLevel + i) % LEVELS.length;
       restart();
       startGame(currentLevel);
-      
     });
 
     levelButtonsContainer.appendChild(btn);

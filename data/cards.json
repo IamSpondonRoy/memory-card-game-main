@@ -12,8 +12,8 @@
         "name": "emu"
     },
     {
-        "image": "../assets/kangeroo.png",
-        "name": "kangeroo"
+        "image": "../assets/kangaroo.png",
+        "name": "kangaroo"
     },
     {
         "image": "../assets/koala.png",
@@ -40,8 +40,8 @@
         "name": "echidnas2"
     },
     {
-        "image": "../assets/kangeroo2.png",
-        "name": "kangeroo2"
+        "image": "../assets/kangaroo2.png",
+        "name": "kangaroo2"
     },
     {
         "image": "../assets/koala2.png",
@@ -53,11 +53,11 @@
     },
     {
         "image": "../assets/tasdev.png",
-        "name": "tasdev"
+        "name": "Tasmanian Devil"
     },
     {
         "image": "../assets/tasdev2.png",
-        "name": "tasdev2"
+        "name": "Tasmanian Devil2"
     },
     {
         "image": "../assets/turtle2.png",
