@@ -195,7 +195,7 @@ async function ensureFunFactsLoaded() {
 function pickFactEN(animal) {
   if (!FUN_FACTS_POOL) return null;
 
-  const key = animal?.toLowerCase();
+  const key = animal?.toLowerCase().replace(/2$/, "");
   let pool = FUN_FACTS_POOL[key];
 
   // fallback if missing
@@ -259,7 +259,6 @@ function showFunFact(animal) {
 function renameAnimal(name) {
   return name
     .replace(/2$/, "")  
-    .replace(/s$/, "")    
     .toLowerCase();       
 }
 function disableCards() {
