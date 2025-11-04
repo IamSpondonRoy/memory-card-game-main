@@ -38,6 +38,7 @@ const toggleSoundBtn = document.getElementById("toggle-sound");
 const levelPickerPopup = document.getElementById("level-picker-popup");
 const levelButtonsContainer = document.getElementById("level-buttons");
 const levelSelectBtn = document.getElementById("level-select-btn");
+const levelSelectBtnWin = document.getElementById("level-select-btn-win");
 const closeLevelPicker = document.getElementById("close-level-picker");
 
 startBtn.addEventListener("click", () => {
@@ -375,6 +376,11 @@ function restart() {
 // Level buttons
 
 levelSelectBtn.addEventListener("click", () => {
+  playSound("button");
+  showLevelPicker();
+});
+
+levelSelectBtnWin.addEventListener("click", () => {
   playSound("button");
   showLevelPicker();
 });
