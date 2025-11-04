@@ -174,7 +174,7 @@ h1 {
 #start-btn:hover,
 #play-again-btn:hover,
 #level-select-btn:hover,
-#level-select-btn-win,
+#level-select-btn-win:hover,
 #close-level-picker:hover,
 #next-level-btn:hover {
   background: #1e874b;
