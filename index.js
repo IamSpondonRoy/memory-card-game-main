@@ -253,7 +253,7 @@ function pushToast({ title = "Fun Fact", text = "", timeout = 3000 } = {}) {
 function showFunFact(animal) {
   const text = pickFactEN(animal);
   if (!text) return false;
-  pushToast({ title: `Fun Fact about  ${animal}s`, text, timeout: 2500 });
+  pushToast({ title: `Fun Fact about  ${animal}s`, text, timeout: 5000 });
   return true;
 }
 
