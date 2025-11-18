@@ -283,7 +283,6 @@ h1 {
   cursor: pointer;
 }
 
-/* 淡入 */
 @keyframes ff-fade-in {
   from { opacity: 0; transform: translateY(-8px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -313,4 +312,9 @@ h1 {
   border: none;
   cursor: pointer;
   transition: background 0.3s ease;
+}
+
+#close-level-picker {
+  margin-top: 20px;
+  margin-bottom: -10px;
 }
